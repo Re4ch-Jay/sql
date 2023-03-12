@@ -42,3 +42,44 @@ select count(role) as number_of_artists from employee where role = "Artist";
 select role, count(name) as empyees_amount from employee group by role;
 
 ```
+
+```sql
+create database assignment4_groupb_phat_panhareach;
+
+use assignment4_groupb_phat_panhareach;
+
+create table Employee (
+	emp_num int primary key,
+    emp_lname varchar(255),
+	emp_fname varchar(255),
+	emp_initial varchar(10) null,
+	emp_hiredate date,
+	job_code int
+);
+
+
+insert into Employee
+	(emp_num, emp_lname, emp_fname, emp_initial, emp_hiredate, job_code) 
+values
+	(101, "News", "John", "G", "2000-11-08", 502),
+    (102, "Senior", "David", "H", "1989-07-12", 501),
+    (103, "Arbough", "June", "E", "1996-12-01", 500),
+    (104, "Ramoras", "Anne", "K", "1987-11-15", 501),
+    (105, "Johnson", "Alice", "K", "1993-02-01", 502),
+    (106, "Smithfield", "William", "", "2004-05-22", 500),
+    (107, "Alonzo", "Maria", "D", "1993-10-10", 500),
+    (108, "Washington", "Ralph", "B", "1991-08-22", 501),
+	(109, "Smith", "Larry", "W", "1997-08-18", 501);
+   
+select * from Employee where job_code=502;    
+update Employee set emp_num = 501 where emp_num = 107;    
+select * from Employee order by emp_fname, job_code desc;
+delete from Employee where emp_fname = "William" and emp_lname = "Smithfield" and emp_hiredate = "2004-06-22" and job_code=500;    
+alter table Employee add emp_pct int;
+alter table Employee add proj_num int;
+update Employee set proj_num = 18 where job_code = 500;
+update Employee set proj_num = 25 where job_code >= 502;
+update Employee set proj_num = 14 where job_code >= 501 and emp_hiredate < "1994-01-01";
+
+```
+
