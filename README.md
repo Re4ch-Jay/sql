@@ -290,3 +290,126 @@ select distinct status from user_details;
 select first_name, last_name, status from user_details where status = 2; 
 
 ```
+
+```sql
+
+create database prepare_exam_2;
+use prepare_exam_2;
+
+create table users(
+	user_id int primary key auto_increment,
+    fname varchar(50) not null,
+    lname varchar(50) not null,
+    email varchar(200) not null,
+    password varchar(255) not null,
+    avatar varchar(255) null,
+    created_at date not null
+);
+
+create table blogs(
+	blog_id int primary key auto_increment,
+    user_id int not null,
+    title varchar(50) not null,
+    description varchar(100) not null,
+    body varchar(255) not null,
+    created_at date not null,
+	foreign key (user_id) references users(user_id)
+);
+
+create table comments(
+	comment_id int primary key auto_increment,
+    user_id int not null,
+    blog_id int not null,
+    body varchar(2000) not null,
+    created_at date not null,
+    foreign key (user_id) references users(user_id),
+    foreign key (blog_id) references blogs(blog_id)
+);
+
+create table likes(
+	like_id int primary key auto_increment,
+	user_id int not null,
+    blog_id int not null,
+	foreign key (user_id) references users(user_id),
+    foreign key (blog_id) references blogs(blog_id),
+    created_at date not null
+);
+
+
+-- Test insert to user table
+INSERT INTO users (fname, lname, email, password, avatar, created_at)
+VALUES 
+    ('John', 'Doe', 'johndoe@example.com', 'password123', NULL, '2023-03-14'),
+    ('Jane', 'Doe', 'janedoe@example.com', 'password456', NULL, '2023-03-14'),
+    ('Bob', 'Smith', 'bobsmith@example.com', 'password789', NULL, '2023-03-14'),
+    ('Alice', 'Jones', 'alicejones@example.com', 'passwordabc', NULL, '2023-03-14'),
+    ('David', 'Lee', 'davidlee@example.com', 'passworddef', NULL, '2023-03-14'),
+    ('Sarah', 'Chang', 'sarahchang@example.com', 'passwordghi', NULL, '2023-03-14'),
+    ('Michael', 'Brown', 'michaelbrown@example.com', 'passwordjkl', NULL, '2023-03-14'),
+    ('Karen', 'Davis', 'karendavis@example.com', 'passwordmno', NULL, '2023-03-14'),
+    ('Alex', 'Nguyen', 'alexnguyen@example.com', 'passwordpqr', NULL, '2023-03-14'),
+    ('Emily', 'Garcia', 'emilygarcia@example.com', 'passwordstu', NULL, '2023-03-14');
+
+
+-- Test insert into blogs table
+
+  INSERT INTO blogs (user_id, title, description, body, created_at) VALUES 
+(1, 'First Blog', 'This is my first blog post', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac luctus odio. Maecenas id neque ex. Donec rutrum nibh id sapien maximus', '2022-01-01'),
+(1, 'Second Blog', 'This is my second blog post', 'Nulla non dolor non odio tincidunt tristique sed sit amet tellus. Donec finibus magna eget nulla fringilla eleifend', '2022-01-15'),
+(2, 'My Thoughts', 'Some thoughts on current events', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac luctus odio. Maecenas id neque ex. Donec rutrum nibh id sapien maximus', '2022-02-01'),
+(2, 'Travel Blog', 'My adventures around the world', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac luctus odio. Maecenas id neque ex. Donec rutrum nibh id sapien maximus', '2022-02-15'),
+(3, 'Tech News', 'Updates on the latest technology', 'Nulla non dolor non odio tincidunt tristique sed sit amet tellus. Donec finibus magna eget nulla fringilla eleifend', '2022-03-01'),
+(3, 'Fitness Tips', 'How to stay fit and healthy', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac luctus odio. Maecenas id neque ex. Donec rutrum nibh id sapien maximus', '2022-03-15'),
+(4, 'Food Blog', 'My favorite recipes and restaurants', 'Nulla non dolor non odio tincidunt tristique sed sit amet tellus. Donec finibus magna eget nulla fringilla eleifend', '2022-04-01'),
+(4, 'Business News', 'Updates on the latest business trends', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac luctus odio. Maecenas id neque ex. Donec rutrum nibh id sapien maximus', '2022-04-15'),
+(5, 'Fashion Blog', 'My style and fashion tips', 'Nulla non dolor non odio tincidunt tristique sed sit amet tellus. Donec finibus magna eget nulla fringilla eleifend', '2022-05-01'),
+(5, 'Travel Blog', 'My adventures around the world', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac luctus odio. Maecenas id neque ex. Donec rutrum nibh id sapien maximus', '2022-05-15');
+
+
+-- Test insert into comments table
+
+
+INSERT INTO comments (user_id, blog_id, body, created_at) VALUES 
+(1, 1, 'Great post!', '2022-01-02'),
+(2, 1, 'I completely agree!', '2022-01-03'),
+(3, 1, 'Thanks for sharing your thoughts', '2022-01-04'),
+(4, 2, 'Interesting perspective', '2022-01-16'),
+(5, 2, 'I never thought about it that way', '2022-01-17'),
+(1, 3, 'I love your writing style', '2022-02-02'),
+(2, 3, 'Keep up the great work!', '2022-02-03'),
+(3, 3, 'Can\'t wait to read more!', '2022-02-04'),
+(4, 4, 'You\'re so lucky to travel so much', '2022-02-16'),
+(5, 4, 'Thanks for sharing your adventures', '2022-02-17');
+
+
+-- Test insert into likes table
+
+INSERT INTO likes (user_id, blog_id, created_at) VALUES 
+(1, 1, '2022-01-02'),
+(2, 1, '2022-01-03'),
+(3, 1, '2022-01-04'),
+(4, 2, '2022-01-16'),
+(5, 2, '2022-01-17'),
+(1, 3, '2022-02-02'),
+(2, 3, '2022-02-03'),
+(3, 3, '2022-02-04'),
+(4, 4, '2022-02-16'),
+(5, 4, '2022-02-17');
+
+-- Test query 
+
+select * from users;
+select * from blogs;
+select * from comments;
+select * from likes;
+
+select count(fname) as count_all_users from users;
+select count(body) as comments from comments;
+select count(like_id) as likes from likes;
+select user_id, count(blog_id) as blog_post_by_user from blogs group by user_id;
+select user_id, count(like_id) as blog_like_by_user from likes group by user_id;
+select user_id, count(comment_id) as blog_comment_by_user from comments group by user_id;
+select * from blogs where user_id = 1;
+select * from comments where blog_id = 1 and user_id = 1;
+
+```
